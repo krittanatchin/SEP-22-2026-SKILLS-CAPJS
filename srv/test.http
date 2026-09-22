@@ -1,0 +1,154 @@
+http://localhost:4004/odata/v4/catalog
+
+###
+http://localhost:4004/odata/v4/catalog/BPSrv
+
+####
+http://localhost:4004/odata/v4/catalog/ProductSrv
+
+### Metadata of the service
+http://localhost:4004/odata/v4/catalog/$metatdata
+
+### $top, $skip, $count, $select, $filter, $expand
+
+### Read the data from Empolyee Service
+GET http://localhost:4004/odata/v4/catalog/EmployeeSrv
+
+### Read the data from Product Service
+GET http://localhost:4004/odata/v4/catalog/ProductSrv
+
+### Read first 10 Employee from Employee Service
+GET http://localhost:4004/odata/v4/catalog/EmployeeSrv?$top=10
+
+### Read 11 - 20 Employee from Employee Service by skip
+GET http://localhost:4004/odata/v4/catalog/EmployeeSrv?$top=10&$skip=10
+
+### Count Employee from Employee Service
+GET http://localhost:4004/odata/v4/catalog/EmployeeSrv/$count
+
+### Read specific detail of an employee
+GET http://localhost:4004/odata/v4/catalog/EmployeeSrv?$select=nameFirst,nameLast,phoneNumber,email,accountNumber,salaryAmount
+
+### Read only female employee detail
+GET http://localhost:4004/odata/v4/catalog/EmployeeSrv?filter=gender eq 'F'
+
+## eq = equal, gt = greater than, lt = less than, ge = greater than or equal , le = less than or eqaul
+### Read employee detail where their salary more than 50,000 USD
+GET http://localhost:4004/odata/v4/catalog/EmployeeSrv?filter=currency_code eq 'USD',salaryamount gt 50000
+
+### Read all header and item information from any services
+GET http://localhost:4004/odata/v4/catalog/POSrv?$expand=Items
+
+### Read a specific employee service
+GET http://localhost:4004/odata/v4/catalog/EmployeeSrv(02BD2137-0890-1EEA-A6C2-BB55C19787GG)
+
+### Insert record into the Employee Service
+POST http://localhost:4004/odata/v4/catalog/EmployeeSrv
+Content-Type: application/json
+
+{
+  "Currency_code": "USD",
+  "ID": "02BD2137-0890-1EEA-A6C2-BB55C19787G2",
+  "accountNumber": "999999999",
+  "bankId": "9999999999",
+  "bankName": "My Bank of Korea",
+  "email": "iron.man@stark.info",
+  "gender": "M",
+  "language": "E",
+  "login": "IRONMAN",
+  "nameFirst": "Iron",
+  "nameInitials": null,
+  "nameLast": "Man",
+  "nameMiddle": null,
+  "phoneNumber": "+1 999 999 999",
+  "salaryAmount": "5000.00"
+}
+
+### Update salary of an employee
+PUT http://localhost:4004/odata/v4/catalog/EmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C19787GG
+Content-Type: application/json
+
+{
+  "Currency_code": "USD",
+  "salaryAmount": 80000
+}
+
+### Remove an employee from Employee table
+DELETE http://localhost:4004/odata/v4/catalog/EmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C19787GG
+
+### Read a specific product service
+GET http://localhost:4004/odata/v4/catalog/ProductSrv(74867AD200E41EDBA5D8B06B26EB4052)
+
+### Insert record into the Employee Service
+POST http://localhost:4004/odata/v4/catalog/ProductSrv
+Content-Type: application/json
+
+{
+    "BP_NODE_KEY": "74867AD200E41EDBA5D8B06885AB2052",
+      "CATEGORY": "Tablet",
+      "CURRENCY_CODE": "EUR",
+      "DESCRIPTION": "IPAD PRO 11 inc",
+      "DIM_UNIT": "CM",
+      "HEIGHT": "3.00",
+      "MEASURE_UNIT": "EA",
+      "NODE_KEY": "74867AD200E41EDBA5D8B06B26EB4999",
+      "PRICE": "1200.00",
+      "PRODUCT_ID": "APP-1000",
+      "TAX_TARIF_CODE": 1,
+      "TYPE_CODE": "PR",
+      "WEIGHT_MEASURE": "4.20",
+      "WEIGHT_UNIT": "KG",
+      "WIDHT": "30.00"
+}
+
+### Update salary of an product
+PUT http://localhost:4004/odata/v4/catalog/ProductSrv/74867AD200E41EDBA5D8B06B26EB4999
+Content-Type: application/json
+
+{
+  "CURRENCY_CODE": "EUR",
+  "PRICE": 1500
+}
+
+### Call the custom function which is create
+GET http://localhost:4004/odata/v4/catalog/getTopFiveSalariedEmployees()
+
+### Call the custom function which is create
+GET http://localhost:4004/odata/v4/catalog/getTop10Products()
+
+### Insert record into the Employee Service
+POST http://localhost:4004/odata/v4/catalog/createEmployee
+Content-Type: application/json
+
+{
+  "input" : [
+    {
+      "Currency_code": "USD",
+      "ID": "02BD2137-0890-1EEA-A6C2-BB55C19787JJ",
+      "accountNumber": "999999999",
+      "bankId": "9999999999",
+      "bankName": "My Bank of Korea",
+      "email": "iron.man@stark.info",
+      "gender": "M",
+      "language": "E",
+      "loginName": "IRONMAN",
+      "nameFirst": "Iron",
+      "nameInitials": null,
+      "nameLast": "Man",
+      "nameMiddle": null,
+      "phoneNumber": "+1 999 999 999",
+      "salaryAmount": "5000.00"
+    }
+  ]
+}
+
+### Privide discount using instance bounded action
+POST http://localhost:4004/odata/v4/catalog/POSrv/74867AD200E41EDBA5D8B0C98DC2A052/discountPrice
+Content-Type: application/json
+
+{
+
+}
+
+###
+GET http://localhost:4004/odata/v4/catalog/POSrv/74867AD200E41EDBA5D8B0C98DC2A052/largestOrder
