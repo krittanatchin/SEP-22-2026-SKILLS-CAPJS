@@ -12,7 +12,7 @@ context master {
         WEB : String(255) @(title: '{i18n>WEB}');
         BP_ID : cmn.identity @(title: '{i18n>BP_ID}');
         COMPANY_NAME : String(255) @(title: '{i18n>COMPANY_NAME}');
-        // Managed Association
+        // Managed Association - test new commit
         AD : Association to one Addresses @(title: '{i18n>ADDRESS_GUID}');
     }
 
