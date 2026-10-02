@@ -2,14 +2,10 @@
   "name": "purchaseorders",
   "version": "1.0.0",
   "dependencies": {
-    "@cap-js/hana": "^3.0.2",
+    "@cap-js/hana": "^3.1.0",
     "@sap/cds": "^10.0.6",
-    "@sap/xssec": "^4.15.0"
-  },
-  "devDependencies": {
-    "@cap-js/sqlite": "^2.4",
-    "@sap/cds-dk": "^9",
-    "cds-plugin-ui5": "^0.17.0"
+    "@sap/cds-dk": "^10.1.2",
+    "@sap/xssec": "^4"
   },
   "scripts": {
     "start": "cds-serve",
@@ -23,5 +19,16 @@
   "sapux": [
     "app/poapplication",
     "app/poapp"
-  ]
+  ],
+  "cds": {
+    "server": {
+      "index": true
+    },
+    "requires": {
+      "[production]": {
+        "auth": "xsuaa"
+      }
+    }
+  }
 }
+ 

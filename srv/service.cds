@@ -21,7 +21,7 @@ type createEmployeeInput :array of {
 }
 
 
-service CatalogService {
+service CatalogService @(require: 'authenticated-user'){
 
     entity ProductSrv as projection on db.master.Products;
 

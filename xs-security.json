@@ -1,0 +1,35 @@
+{
+  "xsappname": "purchaseorders",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Viewer",
+      "description": "Viewer Role"
+    },
+    {
+      "name": "$XSAPPNAME.Admin",
+      "description": "Admin Role"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "myCountry",
+      "description": "Country",
+      "valueType": "string"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Viewer",
+      "description": "Viewer Role",
+      "scope-references": [
+        "$XSAPPNAME.Viewer"
+      ],
+      "attribute-references": [
+        {
+          "name": "myCountry"
+        }
+      ]
+    }
+  ]
+}
