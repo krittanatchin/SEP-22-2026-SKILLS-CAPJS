@@ -37,9 +37,9 @@
     }
   },
   "devDependencies": {
-    "cds-plugin-ui5": "^0.17.0",
     "@sap/cds-dk": "^10.0.6",
-    "rimraf": "^5.0.5",
-    "mbt": "^1.2.49"
+    "cds-plugin-ui5": "^0.17.0",
+    "mbt": "^1.2.49",
+    "rimraf": "^5.0.5"
   }
 }

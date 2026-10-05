@@ -1,0 +1,159 @@
+<core:FragmentDefinition
+    xmlns:tnt="sap.tnt"
+    xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
+>
+    <Dialog
+        id="idEmpAddDia"
+        contentWidth="600px"
+        contentHeight="500px"
+        showFullScreenButton="false"
+        resizable="false"
+        closeOnNavigation="true"
+    >
+        <content>
+            <OverflowToolbar id="otb1">
+                <ToolbarSpacer />
+                <Title
+                    level="H2"
+                    text="Create New Employee"
+                />
+                <ToolbarSpacer />
+            </OverflowToolbar>
+        </content>
+        <VBox class="sapUiSmallMargin">
+            <f:SimpleForm
+                id="AddInterfaceForm"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="4"
+                labelSpanL="3"
+                labelSpanM="4"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="0"
+                emptySpanL="4"
+                emptySpanM="0"
+                emptySpanS="0"
+                columnsXL="2"
+                columnsL="1"
+                columnsM="1"
+                singleContainerFullSize="false"
+                ariaLabelledBy="ariaTitle1"
+            >
+                <f:content>
+                    <Label text="First Name" />
+                    <Input
+                        id="idIPEmpFNM"
+                        placeholder="Enter First Name"
+                    />
+                    <Label text="Last Name" />
+                    <Input
+                        id="idIPEmpLNM"
+                        placeholder="Enter Last Name"
+                    />
+                    <Label text="Middle Name" />
+                    <Input
+                        id="idIPEmpMNM"
+                        placeholder="Enter Middle Name"
+                    />
+                    <Label text="Name Initials" />
+                    <Input
+                        id="idIPEmpNI"
+                        placeholder="Enter Name Initials"
+                    />
+                    <Label text="Login Name" />
+                    <Input
+                        id="idIPEmpLogIn"
+                        placeholder="Enter Login Name"
+                    />
+                    <Label text="Gender" />
+                    <Select
+                        id="idGenderIP"
+                        required="false"
+                        forceSelection="false"
+                    >
+                        <core:Item
+                            key="M"
+                            text="Male"
+                        />
+                        <core:Item
+                            key="F"
+                            text="Female"
+                        />
+                        <core:Item
+                            key="U"
+                            text="Undisclosed"
+                        />
+                    </Select>
+                    <Label text="Language" />
+                    <Input
+                        id="idIPEmpLang"
+                        placeholder="Enter Language"
+                    />
+                    <Label text="Phone Number" />
+                    <Input
+                        id="idIPEmpPNO"
+                        placeholder="Enter Phone Number"
+                    />
+                    <Label text="Email" />
+                    <Input
+                        id="idIPEmpEmail"
+                        placeholder="Enter Email"
+                    />
+                    <Label text="Currency" />
+                    <Input
+                        id="idIPEmpCurr"
+                        placeholder="Enter Currency Code"
+                    />
+                    <Label text="Salary Amount" />
+                    <Input
+                        id="idIPEmpSalAmt"
+                        placeholder="Enter Salary Amount"
+                    />
+                    <Label text="Account Number" />
+                    <Input
+                        id="idIPEmpAccNo"
+                        placeholder="Enter Account Number"
+                    />
+                    <Label text="Bank ID" />
+                    <Input
+                        id="idIPEmpBID"
+                        placeholder="Enter Bank ID"
+                    />
+                    <Label text="Bank Name" />
+                    <Input
+                        id="idIPEmpBNM"
+                        placeholder="Enter Bank Name"
+                    />
+                </f:content>
+            </f:SimpleForm>
+        </VBox>
+        <footer>
+            <Toolbar>
+                <content>
+                    <ToolbarSpacer />
+                    <Button
+                        id="idSubmitEmpReq"
+                        type="Accept"
+                        text="Submit"
+                        enabled="true"
+                        press="._createEmployee"
+                    />
+                    <Button
+                        text="Cancel"
+                        type="Reject"
+                        press="._closeDialog"
+                        ariaHasPopup="Dialog"
+                    />
+                </content>
+            </Toolbar>
+        </footer>
+    </Dialog>
+</core:FragmentDefinition>

@@ -3,117 +3,142 @@ ID: purchaseorders
 description: A simple CAP project.
 version: 1.0.0
 modules:
-- name: purchaseorders-ui
-  type: nodejs
-  path: app
-  requires:
-  - name: srv-api
-    group: destinations
-    properties:
-      forwardAuthToken: true
-      name: srv-api
-      strictSSL: true
-      url: ~{srv-url}
-  - name: purchaseorders-auth
-  parameters:
-    buildpack: nodejs_buildpack
-  build-parameters:
-    builder: npm-ci
-- name: purchaseorders-srv
-  type: nodejs
-  path: gen/srv
-  requires:
-  - name: purchaseorders-auth
-  - name: purchaseorders-db
-  provides:
-  - name: srv-api
-    properties:
-      srv-url: ${default-url}
-  parameters:
-    buildpack: nodejs_buildpack
-    instances: 1
-  build-parameters:
-    builder: npm-ci
-- name: purchaseorders-db-deployer
-  type: hdb
-  path: gen/db
-  requires:
-  - name: purchaseorders-db
-  parameters:
-    buildpack: nodejs_buildpack
-- name: purchaseorders-app-content
-  type: com.sap.application.content
-  path: .
-  requires:
-  - name: purchaseorders-repo-host
-    parameters:
-      content-target: true
-  build-parameters:
-    build-result: resources
+  - name: purchaseorders-ui
+    type: nodejs
+    path: app
     requires:
-    - artifacts:
-      - employeeapp.zip
-      name: employeeapp
-      target-path: resources/
-- name: employeeapp
-  type: html5
-  path: app/employeeapp
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
+      - name: srv-api
+        group: destinations
+        properties:
+          forwardAuthToken: true
+          name: srv-api
+          strictSSL: true
+          url: ~{srv-url}
+      - name: purchaseorders-auth
+    parameters:
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+  - name: purchaseorders-srv
+    type: nodejs
+    path: gen/srv
+    requires:
+      - name: purchaseorders-auth
+      - name: purchaseorders-db
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+    parameters:
+      buildpack: nodejs_buildpack
+      instances: 1
+    build-parameters:
+      builder: npm-ci
+  - name: purchaseorders-db-deployer
+    type: hdb
+    path: gen/db
+    requires:
+      - name: purchaseorders-db
+    parameters:
+      buildpack: nodejs_buildpack
+  - name: purchaseorders-app-content
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: purchaseorders-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - employeeapp.zip
+          name: employeeapp
+          target-path: resources/
+  - name: employeeapp
+    type: html5
+    path: app/employeeapp
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms:
+        []
+  - name: purchaseorders
+    type: approuter.nodejs
+    path: app/
+    parameters:
+      keep-existing-routes: true
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api # must be used in xs-app.json as well
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: purchaseorders-auth
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
 resources:
-- name: purchaseorders-auth
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      oauth2-configuration:
-        credential-types:
-        - binding-secret
-        - x509
-      tenant-mode: dedicated
-      xsappname: purchaseorders-${org}-${space}
-    path: ./xs-security.json
-    service: xsuaa
-    service-plan: application
-- name: purchaseorders-db
-  type: com.sap.xs.hdi-container
-  parameters:
-    service: hana
-    service-plan: hdi-shared
-- name: purchaseorders-repo-host
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: html5-apps-repo
-    service-name: purchaseorders-html5-service
-    service-plan: app-host
-- name: purchaseorders-destination-service
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      HTML5Runtime_enabled: false
-      init_data:
-        instance:
-          destinations:
-          - Authentication: NoAuthentication
-            Name: ui5
-            ProxyType: Internet
-            Type: HTTP
-            URL: https://ui5.sap.com
-          existing_destinations_policy: update
-      version: 1.0.0
-    service: destination
-    service-name: purchaseorders-destination-service
-    service-plan: lite
+  - name: purchaseorders-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        oauth2-configuration:
+          credential-types:
+            - binding-secret
+            - x509
+          redirect-uris:
+            - https://*~{app-api/app-uri}/**
+        tenant-mode: dedicated
+        xsappname: purchaseorders-${org}-${space}
+      path: ./xs-security.json
+      service: xsuaa
+      service-plan: application
+    requires:
+      - name: app-api
+  - name: purchaseorders-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: purchaseorders-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: purchaseorders-html5-service
+      service-plan: app-host
+  - name: purchaseorders-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: false
+        init_data:
+          instance:
+            destinations:
+              - Authentication: NoAuthentication
+                Name: ui5
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://ui5.sap.com
+            existing_destinations_policy: update
+        version: 1.0.0
+      service: destination
+      service-name: purchaseorders-destination-service
+      service-plan: lite
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:
-  - builder: custom
-    commands:
-    - npm ci
-    - npx cds build --production
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
