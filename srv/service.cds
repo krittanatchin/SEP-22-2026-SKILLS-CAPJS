@@ -27,7 +27,14 @@ service CatalogService @(require: 'authenticated-user'){
 
     entity BPSrv as projection on db.master.BusinessPartners;
 
-    entity EmployeeSrv as projection on db.master.Employees;
+    entity EmployeeSrv as projection on db.master.Employees{
+        *,
+        case gender
+            when 'M' then 'Male'
+            when 'F' then 'Female'
+            else 'Undisclosed'
+        end as genderTxt : String(15)
+    };
 
     entity AddressSrv as projection on db.master.Addresses;
 

@@ -1,0 +1,136 @@
+<mvc:View
+    controllerName="employeeapp.controller.home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:smartfilterbar="sap.ui.comp.smartfilterbar"
+    xmlns:smarttable="sap.ui.comp.smarttable"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    height="100%"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+        backgroundDesign="Solid"
+    >
+        <content>
+            <Table
+                id="idEmployeeTab"
+                headerText="Employees"
+                headerLevel="H3"
+                mode="None"
+                items="{mainModel>/EmployeeSrv}"
+            >
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title
+                            id="idEmpTitle"
+                            text="Employees"
+                            textAlign="Begin"
+                            textDirection="Inherit"
+                        />
+                        <ToolbarSpacer />
+                        <SearchField
+                            id="idSearchFld"
+                            width="25%"
+                            placeholder="Search"
+                            liveChange=".onSearch"
+                        />
+                        <Button
+                            id="idCrateBtn"
+                            icon="sap-icon://request"
+                            type="Neutral"
+                            text="Create"
+                            tooltip="Create an Employee"
+                            visible="true"
+                            press="onCreate"
+                        >
+                            <layoutData>
+                                <OverflowToolbarLayoutData
+                                    priority="NeverOverflow"
+                                />
+                            </layoutData>
+                        </Button>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <items>
+                    <ColumnListItem
+                        type="Active"
+                        id="ColLItm0"
+                        press=".onPress"
+                    >
+                        <cells>
+                            <Link
+                                id="idEmpID"
+                                text="{mainModel>ID}"
+                                press=".onPressEmployee"
+                            />
+                            <Text
+                                id="idEmpFNM"
+                                text="{mainModel>nameFirst}"
+                            />
+                            <Text
+                                id="idEmpLNM"
+                                text="{mainModel>nameLast}"
+                            />
+                            <Text
+                                id="idEmpLogin"
+                                text="{mainModel>loginName}"
+                            />
+                            <Text
+                                id="idEmpGender"
+                                text="{mainModel>genderTxt}"
+                            />
+                            <Text
+                                id="idEmpPhone"
+                                text="{mainModel>phoneNumber}"
+                            />
+                            <Text
+                                id="idEmpEmail"
+                                text="{mainModel>email}"
+                            />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+                <columns>
+                    <Column>
+                        <header>
+                            <Label text="Employee ID" />
+                        </header>
+                    </Column>
+                    <Column>
+                        <header>
+                            <Label text="First Name" />
+                        </header>
+                    </Column>
+                    <Column>
+                        <header>
+                            <Label text="Last Name" />
+                        </header>
+                    </Column>
+                    <Column>
+                        <header>
+                            <Label text="Login Name" />
+                        </header>
+                    </Column>
+                    <Column>
+                        <header>
+                            <Label text="Gender" />
+                        </header>
+                    </Column>
+                    <Column>
+                        <header>
+                            <Label text="Phone Number" />
+                        </header>
+                    </Column>
+                    <Column>
+                        <header>
+                            <Label text="Email" />
+                        </header>
+                    </Column>
+                </columns>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

@@ -1,0 +1,70 @@
+<core:FragmentDefinition xmlns:tnt="sap.tnt"
+    xmlns="sap.m"
+    xmlns:table="sap.ui.table"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:grid="sap.ui.layout.cssgrid"
+>
+    <Dialog
+        id="idDisplayEmployee"
+        title="Employee Details"
+        titleAlignment="Center"
+        contentWidth="750px"
+        contentHeight="500px"
+        closeOnNavigation="true"
+    >
+        <VBox class="sapUiSmallMargin">
+            <f:SimpleForm
+                id="DisplayInterfaceForm"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="4"
+                labelSpanL="3"
+                labelSpanM="4"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="0"
+                emptySpanL="4"
+                emptySpanM="0"
+                emptySpanS="0"
+                columnsXL="2"
+                columnsL="1"
+                columnsM="1"
+                singleContainerFullSize="false"
+                ariaLabelledBy="ariaTitle1"
+            >
+                <f:content>
+                    <Label text="Employee ID " />
+                    <Text text="{localEmpDetails>/localEmpID}"></Text>
+                    <Label text="First Name " />
+                    <Text text="{localEmpDetails>/localFname}" class="newStatus"></Text>
+                    <Label text="Last Name " />
+                    <Text text="{localEmpDetails>/localLname}"></Text>
+                    <Label text="Gender " />
+                    <Text text="{localEmpDetails>/localGender}"></Text>
+                    <Label text="Phone Number" />
+                    <Text text="{localEmpDetails>/localPhone}"></Text>
+                    <Label text="Email " />
+                    <Text text="{localEmpDetails>/localEmail}"></Text>
+                </f:content>
+           </f:SimpleForm>
+        </VBox>
+ 
+        <footer>
+            <Toolbar>
+                <content>
+                    <ToolbarSpacer />
+                    <Button
+                        text="Close"
+                        type="Neutral"
+                        press="._closeDialog"
+                        ariaHasPopup="Dialog"
+                    />
+                </content>
+            </Toolbar>
+        </footer>
+    </Dialog>
+</core:FragmentDefinition>

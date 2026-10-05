@@ -11,7 +11,11 @@
     "start": "cds-serve",
     "watch-poaapp": "cds watch --open poaapp.poaapp/index.html?sap-ui-xx-viewCache=false --livereload false",
     "watch-poapplication": "cds watch --open poapplication/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "watch-poapp": "cds watch --open poapp/index.html?sap-ui-xx-viewCache=false --livereload false"
+    "watch-poapp": "cds watch --open poapp/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-employeeapp": "cds watch --open employeeapp/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "undeploy": "cf undeploy purchaseorders --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
   },
   "workspaces": [
     "app/*"
@@ -26,9 +30,16 @@
     },
     "requires": {
       "[production]": {
-        "auth": "xsuaa"
+        "auth": {
+          "kind": "xsuaa"
+        }
       }
     }
+  },
+  "devDependencies": {
+    "cds-plugin-ui5": "^0.17.0",
+    "@sap/cds-dk": "^10.0.6",
+    "rimraf": "^5.0.5",
+    "mbt": "^1.2.49"
   }
 }
- 
